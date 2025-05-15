@@ -1,16 +1,29 @@
 import { MongoClient } from 'mongodb';
+import dotenv from 'dotenv';
 
-const uri = 'mongodb://localhost:27017'; // Local MongoDB URI
+dotenv.config();
+
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const dbName = process.env.DB_NAME || 'node_assignment';
+
 const client = new MongoClient(uri);
+let isConnected = false;
 
 export const connectToDb = async () => {
+  if (isConnected) return;
+  console.log("Connecting to MongoDB...");
   try {
     await client.connect();
+    isConnected = true;
     console.log("Connected to MongoDB");
   } catch (err) {
     console.error("Error connecting to MongoDB:", err);
+    process.exit(1); 
   }
 };
 
-export const getDb = () => client.db('node_assignment'); // Database name
+const db = client.db(dbName);
 
+export const usersCollection = db.collection('users');
+export const postsCollection = db.collection('posts');
+export const commentsCollection = db.collection('comments');

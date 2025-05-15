@@ -11,4 +11,3 @@ export interface Post {
   body: string;
   comments: Comment[];
 }
-
