@@ -1,0 +1,12 @@
+# dependencies
+node_modules/
+
+# TypeScript
+dist/
+
+# environment variables
+.env
+
+# system
+.DS_Store
+
